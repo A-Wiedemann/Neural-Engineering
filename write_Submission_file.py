@@ -8,11 +8,12 @@ import cPickle
 from random import *
 
 
-
+pred = np.random.randint(2, size=3400)                                              # generate a random vector of 1's and 0's
 
 ############### Write the resulting predictions in a csv file #####################
 import csv
 
+# read in the submission labels and store them in the output variable
 output = np.zeros(3401,dtype=object)
 with open('SampleSubmission.csv', 'rb') as csvfile:
      trial_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
@@ -25,6 +26,8 @@ with open('SampleSubmission.csv', 'rb') as csvfile:
 
 print(output[0:10])
 
+
+# now open the new submission file and write in the labels and the data
 with open('predictions.csv','wb') as csvfile:
     result_writer = csv.writer(csvfile,delimiter=',')
     result_writer.writerow(['IdFeedBack','Prediction'])
