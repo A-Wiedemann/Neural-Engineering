@@ -72,14 +72,13 @@ for files in list_of_test_files:
 
 ############### Now write X_test to a csv file ###################
 '''
-with open('X_test.csv','wb') as csvfile:
+with open('X_test2.csv','wb') as csvfile:
     result_writer = csv.writer(csvfile,delimiter=',')
 
     X_shape = np.shape(X_test)
     for i in xrange(X_shape[0]):
-        for j in xrange(X_shape[1]) :
-            #result_writer.writerow([output[i],pred[i-1]])
-            result_writer.write([X_test[i,j]])
+        #result_writer.writerow([output[i],pred[i-1]])
+        result_writer.writerow([X_test[i,:]])
 '''
 
 np.savetxt('X_test.csv', X_test, delimiter=",")

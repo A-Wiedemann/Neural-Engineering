@@ -9,10 +9,12 @@ import cPickle
 from random import *
 import glob
 import csv
+import time
 
+start_time = time.clock()
 
 ################ read in training labels ####################################
-labels = np.zeros(5440,dtype=object)
+labels = np.zeros(5440)
 with open('TrainLabels.csv', 'rb') as csvfile:
      trial_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
      rownum = 0
@@ -33,33 +35,34 @@ with open('X_train.csv', 'rb') as csvfile:
          trial_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
          rownum = 0
          for row in trial_reader:
-             #print(row[0])
-             if rownum>0:
-                colnum=0
-                for col in row:
-                    X_train[rownum-1][colnum-1]=row[colnum]
+            colnum=0
+            for col in row:
+                X_train[rownum-1][colnum-1]=row[colnum]
+                colnum+=1
+            rownum+=1
 '''
 ##################################### Read in test feature matrix X_train ##################################
 '''
-X_test = np.zeros((3400,260))
-with open('X_train.csv', 'rb') as csvfile:
+X_test = np.zeros((3400,260),dtype=np.float)
+with open('X_test.csv', 'rb') as csvfile:
          trial_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
          rownum = 0
          for row in trial_reader:
-             #print(row[0])
-             if rownum>0:
-                colnum=0
-                for col in row:
-                    X_test[rownum-1][colnum-1]=row[colnum]
+            colnum=0
+            for col in row:
+                X_test[rownum][colnum]=row[colnum]
+                colnum += 1
+            rownum += 1
 
 '''
 #### Now train a simple SVM classifier ####
 '''
-print('X_train: ', np.shape(X_train))
-print('X_test: ', np.shape(X_test))
+print('X_train: ', X_train[0:1,0:1],np.shape(X_train))
+print('X_test: ', X_test[0:1,0:1],np.shape(X_test))
 
 clf = RandomForestClassifier(n_estimators=10)
 clf.fit(X_train,y)
+#clf.fit(X_train[0:5000,:],y[0:5000])
 
 
 pred = clf.predict(X_test)
@@ -87,3 +90,6 @@ with open('predictions.csv','wb') as csvfile:
 
     for i in range(1,3401):
         result_writer.writerow([output[i],pred[i-1]])
+
+end_time = time.clock()
+print'time elapse: ',(end_time-start_time)/60,' minutes'
