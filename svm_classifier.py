@@ -71,7 +71,7 @@ clf = svm.SVC(kernel="linear", C=5, gamma=1e-4)
 X_train=X_train[:,::13]                              # downsampling with a factor of 4
 print('downsampled X_train: ', np.shape(X_train))
 #clf.fit(X_train,y)
-clf.fit(X_train[0:600,:],y[0:600])
+clf.fit(X_train[0:400,:],y[0:400])
 
 X_test=X_test[:,::13]
 
