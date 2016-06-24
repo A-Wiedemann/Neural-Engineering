@@ -30,6 +30,8 @@
 ############################
 train/
 test/
+EEGLearn/
+prediction.csv
 
 # Backup files #
 ################
