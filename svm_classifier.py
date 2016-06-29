@@ -1,7 +1,5 @@
 __author__ = 'Nicolas'
 
-__author__ = 'Nicolas'
-
 import gzip
 import numpy as np
 import time
