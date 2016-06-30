@@ -30,6 +30,13 @@ class EEGrunt:
             self.nchannels = 4
             self.channels = [1,2,3,4]
             self.col_offset = -1
+
+        if self.source = 'bci-challenge':
+            self.fs_Hz = 200
+            self.NFFT = 220*2             # ???????
+            self.nchannels = 56
+            self.channels = range(1,57)
+            self.col_offset = 0
             
             
         self.sample_block = 11
@@ -39,7 +46,7 @@ class EEGrunt:
         self.overlap  = self.NFFT - int(0.25 * self.fs_Hz)
         
 
-
+        
 
     def load_data(self):
 
@@ -83,6 +90,15 @@ class EEGrunt:
                           skiprows=skiprows,
                           usecols=(0,1,2,3,4,5,6,7,8)
                           )
+
+
+        if source = 'bci-challenge':
+            skiprows = 1
+            raw_data = np.loadtxt(path + filename,
+                                      delimiter=',',
+                                      skiprows=skiprows,
+                                      usecols=tuple(range(1,57))
+                                      )
 
 
 
