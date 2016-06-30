@@ -17,10 +17,10 @@ class EEGrunt:
             self.session_title = source.title()+" data loaded from "+filename
         
         if self.source == 'openbci' or self.source == 'openbci-openvibe':
-            self.fs_Hz = 200.0
+            self.fs_Hz = 250.0
             self.NFFT = 256*2
-            self.nchannels = 56
-            self.channels = range(1,57)
+            self.nchannels = 8
+            self.channels = [1,2,3,4,5,6,7,8]
             self.col_offset = 0
 
         
@@ -68,11 +68,11 @@ class EEGrunt:
             raw_data = np.array(raw_data, dtype=dt)
 
         if source == 'openbci':
-            skiprows = 1
+            skiprows = 5
             raw_data = np.loadtxt(path + filename,
                           delimiter=',',
                           skiprows=skiprows,
-                          usecols=tuple(range(1,57))
+                          usecols=(0,1,2,3,4,5,6,7,8)
                           )
 
 
