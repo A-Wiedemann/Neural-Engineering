@@ -31,7 +31,7 @@ class EEGrunt:
             self.channels = [1,2,3,4]
             self.col_offset = -1
 
-        if self.source = 'bci-challenge':
+        if self.source == 'bci-challenge':
             self.fs_Hz = 200
             self.NFFT = 220*2             # ???????
             self.nchannels = 56
@@ -92,12 +92,12 @@ class EEGrunt:
                           )
 
 
-        if source = 'bci-challenge':
+        if source == 'bci-challenge':
             skiprows = 1
             raw_data = np.loadtxt(path + filename,
                                       delimiter=',',
                                       skiprows=skiprows,
-                                      usecols=tuple(range(1,57))
+                                      usecols=tuple(range(0,57))
                                       )
 
 
@@ -107,6 +107,10 @@ class EEGrunt:
         self.t_sec = np.arange(len(self.raw_data[:, 0])) /self.fs_Hz
 
 
+    def set_data(self, raw_data):
+        print("Setting raw data of size: ", np.shape(raw_data))
+        self.raw_data = raw_data
+        self.t_sec = np.arange(len(self.raw_data[:, 0])) /self.fs_Hz
     
     def load_channel(self,channel):
         print("Loading channel: "+str(channel))
