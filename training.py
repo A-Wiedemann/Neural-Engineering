@@ -7,6 +7,7 @@ import csv
 
 import numpy as np
 
+start_time = time.clock()
 ################ read in training labels ####################################
 labels = np.zeros(5440)
 with open('TrainLabels.csv', 'rb') as csvfile:
@@ -91,6 +92,9 @@ model.fit(X_train, y, nb_epoch=1, batch_size=2)
 # evaluate the model
 # scores = model.evaluate(X_test, y_test)
 pred = model.predict_classes(X_test)
+# pred = model.prediction(X_test)
+
+# pred = pred[:,1]
 
 # print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
