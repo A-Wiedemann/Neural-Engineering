@@ -43,11 +43,16 @@ images = eeg_cnn_lib.gen_images(channelsLocation, X_train, 16, augment=True, pca
 # input_var = T.TensorType('floatX', ((False,) * 5))()        # Notice the () at the end
 target_var = T.ivector('targets')
 
-input_var = T.tensor4('inputs')
+# input_var = T.tensor4('inputs')
+input_var = None
 # target_var = T.ivector('targets')
 
 
-network = eeg_cnn_lib.build_cnn(input_var=input_var, imSize=np.shape(images)[2], n_colors=np.shape(images)[1])
+# network = eeg_cnn_lib.build_cnn(input_var=input_var, imSize=np.shape(images)[2], n_colors=np.shape(images)[1])
+network = eeg_cnn_lib.build_convpool_max(input_var, 3)
+# l_out = lasagne.layers.DenseLayer(
+#         network, num_units=1,
+#         nonlinearity=lasagne.nonlinearities.softmax)
 ############################################################################################
 
 ############ Training the thing ############################################################
