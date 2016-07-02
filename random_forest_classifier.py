@@ -60,12 +60,14 @@ with open('X_test.csv', 'rb') as csvfile:
 print('X_train: ', X_train[0:1,0:1],np.shape(X_train))
 print('X_test: ', X_test[0:1,0:1],np.shape(X_test))
 
-clf = RandomForestClassifier(n_estimators=10)
+clf = RandomForestClassifier(n_estimators=100)
 clf.fit(X_train,y)
 #clf.fit(X_train[0:5000,:],y[0:5000])
 
 
-pred = clf.predict(X_test)
+pred = clf.predict_proba(X_test)
+pred = pred[:,1]
+
 
 print(pred[0:10])
 

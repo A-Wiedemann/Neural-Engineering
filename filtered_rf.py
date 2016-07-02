@@ -54,13 +54,18 @@ with open('X_test_average.csv', 'rb') as csvfile:
                 colnum += 1
             rownum += 1
 
+
+
 '''
 #### Now train a simple SVM classifier ####
 '''
-print('X_train: ', X_train[0:1,0:1],np.shape(X_train))
-print('X_test: ', X_test[0:1,0:1],np.shape(X_test))
 
-clf = RandomForestClassifier(n_estimators=10)
+
+
+#print('X_train: ', X_train[0:1,0:1],np.shape(X_train))
+#print('X_test: ', X_test[0:1,0:1],np.shape(X_test))
+
+clf = RandomForestClassifier(n_estimators=5, max_depth=1)
 clf.fit(X_train,y)
 #clf.fit(X_train[0:5000,:],y[0:5000])
 
