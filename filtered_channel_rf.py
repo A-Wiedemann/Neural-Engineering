@@ -65,12 +65,12 @@ with open('X_test_filtered_channel.csv', 'rb') as csvfile:
 #print('X_train: ', X_train[0:1,0:1],np.shape(X_train))
 #print('X_test: ', X_test[0:1,0:1],np.shape(X_test))
 
-clf = RandomForestClassifier(n_estimators=5, max_depth=3)
+clf = RandomForestClassifier(n_estimators=1000)
 clf.fit(X_train,y)
 #clf.fit(X_train[0:5000,:],y[0:5000])
 
-
-pred = clf.predict(X_test)
+pred = clf.predict_proba(X_test)
+pred = pred[:,1]
 
 print(pred[0:10])
 

@@ -65,8 +65,8 @@ clf = GradientBoostingClassifier(n_estimators=500, learning_rate=0.05).fit(X_tra
 
 #clf.fit(X_train[0:5000,:],y[0:5000])
 
-
-pred = clf.predict(X_test)
+pred = clf.predict_proba(X_test)
+pred = pred[:,1]
 
 print(pred[0:10])
 
