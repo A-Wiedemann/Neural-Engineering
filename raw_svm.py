@@ -66,12 +66,12 @@ clf = svm.SVC(kernel="linear", C=5, gamma=1e-4, probability=True)
 #param_grid = {'kernel': ('linear', 'rbf'), 'C': [0.01, 10], 'gamma': [0.00001, 0.01]}
 #svr = svm.SVC()
 #clf = grid_search.GridSearchCV(svr,param_grid)
-X_train=X_train[:,::26]                              # downsampling with a factor of 4
+X_train=X_train[:,::13]                              # downsampling with a factor of 4
 print('downsampled X_train: ', np.shape(X_train))
 #clf.fit(X_train,y)
 clf.fit(X_train[0:1000,:],y[0:1000])
 
-X_test=X_test[:,::26]
+X_test=X_test[:,::13]
 pred = clf.predict_proba(X_test)
 pred = pred[:,1]
 

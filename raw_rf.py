@@ -60,7 +60,7 @@ with open('X_test.csv', 'rb') as csvfile:
 print('X_train: ', X_train[0:1,0:1],np.shape(X_train))
 print('X_test: ', X_test[0:1,0:1],np.shape(X_test))
 
-clf = RandomForestClassifier(n_estimators=1)
+clf = RandomForestClassifier(n_estimators=1000)
 clf.fit(X_train,y)
 #clf.fit(X_train[0:5000,:],y[0:5000])
 
