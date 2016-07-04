@@ -7,13 +7,20 @@ import csv
 
 import numpy as np
 
+import utils
+
+# from keras.utils.visualize_util import plot
+
 start_time = time.clock()
 
 ################ Reading ####################################
-labels = np.loadtxt('TrainLabels.csv',delimiter=',',skiprows=1,usecols=1)
-y = labels
-X_train = np.loadtxt('X_train.csv', delimiter=',')
-X_test = np.loadtxt('X_test.csv',delimiter=',')
+# labels = np.loadtxt('TrainLabels.csv',delimiter=',',skiprows=1,usecols=[1])
+# y = labels
+# X_train = np.loadtxt('X_train.csv', delimiter=',')
+# X_test = np.loadtxt('X_test.csv',delimiter=',')
+
+X_train, y_train = utils.load_data("EEGLearn/Data.mat")
+y = y_train + 1                     # Don't ask
 
 
 ################################### Training
@@ -32,7 +39,7 @@ X_test = np.loadtxt('X_test.csv',delimiter=',')
 # better performance is seen using the rectifier activation function
 # better performance is seen using the rectifier activation function
 model = Sequential()
-model.add(Dense(12, input_dim=260, init='uniform', activation='relu'))
+model.add(Dense(12, input_dim=X_train.shape[1], init='uniform', activation='relu'))
 model.add(Dense(8, init='uniform', activation='relu'))
 model.add(Dense(1, init='uniform', activation='sigmoid'))
 
@@ -42,11 +49,11 @@ model.add(Dense(1, init='uniform', activation='sigmoid'))
 # efficient gradient descent algorithm adam for no other reason that it is an efficient default
 # because it is a classification problem, we will collect and report the classification accuracy as the metric
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-
+# plot(model, to_file='model.png')
 # Fit the model
 ## fixed number of iterations through the dataset called epochs
 ## set the number of instances that are evaluated before a weight update in the network is performed called the batch size
-model.fit(X_train, y, nb_epoch=1000, batch_size=40)
+model.fit(X_train, y, nb_epoch=1000, batch_size=20)
 
 # evaluate the model
 # scores = model.evaluate(X_test, y_test)
