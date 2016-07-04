@@ -60,7 +60,7 @@ with open('X_test.csv', 'rb') as csvfile:
 print('X_train: ', X_train[0:2,0:2],np.shape(X_train))
 print('X_test: ', X_test[0:2,0:2],np.shape(X_test))
 
-gbm = ens.GradientBoostingClassifier(n_estimators=500,learning_rate=0.05)
+gbm = ens.GradientBoostingClassifier(n_estimators=1000,learning_rate=0.05)
 gbm.fit(X_train,y)
 
 pred = gbm.predict_proba(X_test)

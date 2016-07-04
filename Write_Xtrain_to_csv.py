@@ -52,7 +52,7 @@ for files in list_of_train_files:
     X_new_file = []
     it = 1
     for feedback_event in events:
-        feature_vector = data[feedback_event : feedback_event+260, 29]  # channel CP2 is number 40, Cz is 30
+        feature_vector = data[feedback_event : feedback_event+260, 39]  # channel CP2 is number 40, Cz is 30
         np.transpose(feature_vector)
         if it==1:
             X_new_file = feature_vector

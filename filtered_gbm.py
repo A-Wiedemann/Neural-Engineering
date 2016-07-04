@@ -61,12 +61,12 @@ print('X_train: ', X_train[0:1,0:1],np.shape(X_train))
 print('X_test: ', X_test[0:1,0:1],np.shape(X_test))
 
 
-clf = GradientBoostingClassifier(n_estimators=500, learning_rate=0.05).fit(X_train, y)
+clf = GradientBoostingClassifier(n_estimators=500, learning_rate=0.03).fit(X_train, y)
 
 #clf.fit(X_train[0:5000,:],y[0:5000])
 
-
-pred = clf.predict(X_test)
+pred = clf.predict_proba(X_test)
+pred = pred[:,1]
 
 print(pred[0:10])
 
