@@ -1,12 +1,40 @@
 import EEGrunt
 import glob
-import csv
 import numpy as np
 import scipy.io as sio
+import csv
+import sys, getopt
 
+outformat = ""
 source = 'bci-challenge'
 
-list_of_train_files = glob.glob('../train/Data_*.csv')
+
+def main(argv):
+    try:
+        opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
+    except getopt.GetoptError:
+        print 'WriteDataMat.py -f <format>'
+        sys.exit(2)
+        for opt, arg in opts:
+            if opt == '-h':
+                print 'WriteDataMat.py -f <format>'
+                sys.exit()
+            elif opt in ("-f", "--format"):
+                outformat = arg
+                if outformat not in ["raw", "bands"]:
+                    print '<format> = {raw | bands}'
+                    sys.exit()
+                    
+    print 'Output format is "', outformat
+
+
+
+
+
+
+
+
+list_of_train_files = sorted(glob.glob('../train/Data_*.csv'))
 
 X_train=[]
 file_it=1
@@ -18,7 +46,7 @@ for csvfile in list_of_train_files:
     feedback = np.loadtxt(csvfile, delimiter=',',skiprows=1,usecols=[58])
     data = np.loadtxt(csvfile, delimiter=',',skiprows=1,usecols=range(0,57))
 
-    events = np.where(feedback == 1)
+    events = sorted(np.where(feedback == 1))
     events = np.reshape(events,(-1,1))
 
     X_new_file = []
@@ -33,20 +61,20 @@ for csvfile in list_of_train_files:
 
         for channel in EEG.channels:
             EEG.load_channel(channel)
-            # theta = np.mean(EEG.bandpass(4,8))
-            theta = EEG.bandpass(4,8)
+            theta = np.mean(EEG.bandpass(4,8))
+            # theta = EEG.bandpass(4,8)
             feature_vector.append(theta)
 
         for channel in EEG.channels:
             EEG.load_channel(channel)
-            # alpha = np.mean(EEG.bandpass(8,12))
-            alpha = EEG.bandpass(8,12)
+            alpha = np.mean(EEG.bandpass(8,12))
+            # alpha = EEG.bandpass(8,12)
             feature_vector.append(alpha)
 
         for channel in EEG.channels:
             EEG.load_channel(channel)
-            # beta = np.mean(EEG.bandpass(13,30))
-            beta = EEG.bandpass(13,30)
+            beta = np.mean(EEG.bandpass(13,30))
+            # beta = EEG.bandpass(13,30)
             feature_vector.append(beta)
 
         if it==1:
@@ -65,7 +93,13 @@ for csvfile in list_of_train_files:
     print('shape of X_train: ', np.shape(X_train))
 
 ############### Now write X_test to a mat file ###################
-labels = np.loadtxt('../TrainLabels.csv', delimiter=',',skiprows=1,usecols=[1])
+labels = np.loadtxt('../TrainLabels.csv', delimiter=',',skiprows=1,usecols=[1])  # Such that the labels matches X_train in order the list must be in alphabetical order
+
+
 
 # np.savetxt('X_train.csv', X_train, delimiter=",")
 sio.savemat('Data.mat',{'featMat': X_train, 'labels': labels})
+
+
+if __name__ = "__main__":
+    main(sys.argv[1:])
