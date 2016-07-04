@@ -33,17 +33,20 @@ for csvfile in list_of_train_files:
 
         for channel in EEG.channels:
             EEG.load_channel(channel)
-            theta = np.mean(EEG.bandpass(4,8))
+            # theta = np.mean(EEG.bandpass(4,8))
+            theta = EEG.bandpass(4,8)
             feature_vector.append(theta)
 
         for channel in EEG.channels:
             EEG.load_channel(channel)
-            alpha = np.mean(EEG.bandpass(8,12))
+            # alpha = np.mean(EEG.bandpass(8,12))
+            alpha = EEG.bandpass(8,12)
             feature_vector.append(alpha)
 
         for channel in EEG.channels:
             EEG.load_channel(channel)
-            beta = np.mean(EEG.bandpass(13,30))
+            # beta = np.mean(EEG.bandpass(13,30))
+            beta = EEG.bandpass(13,30)
             feature_vector.append(beta)
 
         if it==1:
