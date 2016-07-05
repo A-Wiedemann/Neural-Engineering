@@ -54,7 +54,7 @@ x = T.TensorType('floatX', ((False,) * 5))('input')        # Notice the () at th
 y = T.ivector('targets')
 
 
-X_train, y_train = utils.load_data("Data.mat")
+X_train, y_train, X_test = utils.load_data("Data.mat")
 y_train = y_train + 1                     # Don't ask
 
 indices = []
