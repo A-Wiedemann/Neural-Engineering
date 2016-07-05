@@ -97,11 +97,12 @@ def load_data(data_file):
     dataMat = scipy.io.loadmat(data_file, mat_dtype=True)
     data = dataMat['featMat']
     labels = dataMat['labels']
+    dataTest = dataMat['featMatTest']
     # indices = np.random.permutation(labels.shape[1])      # shuffling indices
 
     print("Data loading complete. Shape is %r" % (dataMat['featMat'].shape,))
     # return data[indices, :, :, :].astype(np.uint8), labels[:, indices].T - 1        # Shuffled indices
-    return dataMat['featMat'], dataMat['labels'].T - 1   # Sequential indices
+    return dataMat['featMat'], dataMat['labels'].T - 1, dataTest   # Sequential indices
 
 
 def reformatInput(data, labels, indices):
