@@ -17,6 +17,13 @@ X_train=np.loadtxt('X_train_filtered_channel.csv', delimiter=",")
 X_test=np.loadtxt('X_test_filtered_channel.csv',delimiter=",")
 
 
+class1 = np.where(y==1)
+class1number = np.size(class1)
+class0 = np.where(y==0)
+class0number = np.size(class0)
+print class0number
+print class1number
+
 '''
 #### Now train a simple SVM classifier ####
 '''
@@ -25,12 +32,13 @@ X_test=np.loadtxt('X_test_filtered_channel.csv',delimiter=",")
 
 print('X_train: ', X_train[0:1,0:1],np.shape(X_train))
 print('X_test: ', X_test[0:1,0:1],np.shape(X_test))
-clf = RandomForestClassifier(n_estimators=500, criterion='gini')
+clf = RandomForestClassifier(n_estimators=500, criterion='gini', class_weight={0: 1, 1: 2})
 clf.fit(X_train,y)
 #clf.fit(X_train[0:5000,:],y[0:5000])
 
 
 pred = clf.predict_proba(X_test)
+print(pred[0:10])
 pred = pred[:,1]
 
 print(pred[0:10])

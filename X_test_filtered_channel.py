@@ -34,7 +34,7 @@ for f in list_of_train_files:
     EOG = signal[:,-2]
     feedback = signal[:,-1]
 
-    filtered_signal = bandpass(data,[1.0,20.0],freq)
+    filtered_signal = bandpass(data,[1.0, 40.0],freq)
 
     print('filtered_signal shape: ', np.shape(filtered_signal))     # number_timesteps*56
     print('filtered signal', filtered_signal[0:3,0:3])
