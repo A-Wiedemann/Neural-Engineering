@@ -3,6 +3,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import Adam
 
+import pdb
 
 import time
 import csv
@@ -18,11 +19,11 @@ X_train=np.loadtxt('X_train_filtered_channel.csv', delimiter=",")
 X_test=np.loadtxt('X_test_filtered_channel.csv',delimiter=",")
 y_test = None
 
-n_test = 1000
-X_test = X_train[:n_test]
-y_test = y_train[:n_test]
-X_train = X_train[n_test:]
-y_train = y_train[n_test:]
+# n_test = 1000
+# X_test = X_train[:n_test]
+# y_test = y_train[:n_test]
+# X_train = X_train[n_test:]
+# y_train = y_train[n_test:]
 
 ################################### Training
 # The main type of model is the Sequential model, a linear stack of layers
@@ -51,7 +52,7 @@ model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accurac
 # Fit the model
 ## fixed number of iterations through the dataset called epochs
 ## set the number of instances that are evaluated before a weight update in the network is performed called the batch size
-model.fit(X_train, y_train, nb_epoch=1000, batch_size=100)
+model.fit(X_train, y_train, nb_epoch=3000, batch_size=100)
 
 
 
@@ -60,7 +61,10 @@ if y_test != None:
      print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 else:
      pred = model.predict_proba(X_test)
-     pred = pred[:,1]
+     # pdb.set_trace()
+     pred = pred[:,0]
+     
+     
      
      print(pred[0:10])
      
