@@ -107,7 +107,7 @@ class EEGrunt:
         self.t_sec = np.arange(len(self.raw_data[:, 0])) /self.fs_Hz
 
 
-    def set_data(self, raw_data):
+    def set_raw_data(self, raw_data):
         print("Setting raw data of size: ", np.shape(raw_data))
         self.raw_data = raw_data
         self.t_sec = np.arange(len(self.raw_data[:, 0])) /self.fs_Hz
@@ -117,7 +117,7 @@ class EEGrunt:
         channel_data = self.raw_data[:,(channel+self.col_offset)]
         self.channel = channel
         self.data = channel_data
-
+        
         
     def packet_check(self):
         data_indices = self.data[:, 0]
@@ -125,7 +125,7 @@ class EEGrunt:
         n_jump = np.count_nonzero((d_indices != 1) & (d_indices != -255))
         print("Packet counter discontinuities: " + str(n_jump))
         self.n_jump  = n_jump
-
+        
     def remove_dc_offset(self):
         hp_cutoff_Hz = 1.0
         
@@ -133,7 +133,7 @@ class EEGrunt:
         
         b, a = signal.butter(2, hp_cutoff_Hz/(self.fs_Hz / 2.0), 'highpass') 
         self.data = signal.lfilter(b, a, self.data, 0)
-
+        
         
     def notch_mains_interference(self):
         notch_freq_Hz = np.array([60.0])  # main + harmonic frequencies
