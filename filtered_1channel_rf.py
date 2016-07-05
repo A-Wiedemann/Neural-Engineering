@@ -25,7 +25,7 @@ X_test=np.loadtxt('X_test_filtered_channel.csv',delimiter=",")
 
 print('X_train: ', X_train[0:1,0:1],np.shape(X_train))
 print('X_test: ', X_test[0:1,0:1],np.shape(X_test))
-clf = RandomForestClassifier(n_estimators=1500)
+clf = RandomForestClassifier(n_estimators=500, criterion='gini')
 clf.fit(X_train,y)
 #clf.fit(X_train[0:5000,:],y[0:5000])
 
