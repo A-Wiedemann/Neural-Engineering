@@ -14,7 +14,7 @@ import time
 start_time = time.clock()
 
 ################ read in training labels ####################################
-labels = np.zeros(5440)
+'''labels = np.zeros(5440)
 with open('TrainLabels.csv', 'rb') as csvfile:
      trial_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
      rownum = 0
@@ -26,10 +26,12 @@ with open('TrainLabels.csv', 'rb') as csvfile:
 
 print('Labels: ',labels[0:10])
 y = labels
+'''
+y=np.loadtxt('TrainLabels.csv',delimiter=',', skiprows=1,usecols=[1])
 
 '''
 ##################################### Read in train feature matrix X_train ##################################
-'''
+
 X_train = np.zeros((5440,260))
 with open('X_train.csv', 'rb') as csvfile:
          trial_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
@@ -40,9 +42,13 @@ with open('X_train.csv', 'rb') as csvfile:
                 X_train[rownum-1][colnum-1]=row[colnum]
                 colnum+=1
             rownum+=1
+ '''
+X_train=np.loadtxt('X_train.csv', delimiter=",")
+
+
 '''
 ##################################### Read in test feature matrix X_train ##################################
-'''
+
 X_test = np.zeros((3400,260),dtype=np.float)
 with open('X_test.csv', 'rb') as csvfile:
          trial_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
@@ -53,6 +59,8 @@ with open('X_test.csv', 'rb') as csvfile:
                 X_test[rownum][colnum]=row[colnum]
                 colnum += 1
             rownum += 1
+'''
+X_test=np.loadtxt('X_test.csv',delimiter=",")
 
 '''
 #### Now train a simple SVM classifier ####
@@ -60,7 +68,7 @@ with open('X_test.csv', 'rb') as csvfile:
 print('X_train: ', X_train[0:1,0:1],np.shape(X_train))
 print('X_test: ', X_test[0:1,0:1],np.shape(X_test))
 
-clf = RandomForestClassifier(n_estimators=1000)
+clf = RandomForestClassifier(n_estimators=700)
 clf.fit(X_train,y)
 #clf.fit(X_train[0:5000,:],y[0:5000])
 

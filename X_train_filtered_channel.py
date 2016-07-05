@@ -30,11 +30,11 @@ for f in list_of_train_files:
     print f
     signal = np.array(pd.io.parsers.read_csv(f))
     data = signal[:,1:-2]
-    #print('data: ', data[0:3,0:3]) works
+    print('data: ', data[0:1,0:1])
     EOG = signal[:,-2]
     feedback = signal[:,-1]
 
-    filtered_signal = bandpass(data,[1.0,40.0],freq)
+    filtered_signal = bandpass(data,[1.0,20.0],freq)
 
     print('filtered_signal shape: ', np.shape(filtered_signal))     # number_timesteps*56
     print('filtered signal', filtered_signal[0:3,0:3])
@@ -48,7 +48,7 @@ for f in list_of_train_files:
     X_buffer=[]
 
 
-    channel = 46 # select the channel
+    channel = 39 # select the channel
 
     for feedback_event in events:
         feature_vector = filtered_signal[feedback_event : feedback_event+response_window, channel-1]

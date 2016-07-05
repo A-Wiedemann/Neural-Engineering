@@ -39,7 +39,7 @@ for files in list_of_train_files:
     data_shape =  np.shape(data)
     print('Size of data: ',data_shape)
 
-    #print(data[0:1,0:1])
+    print(data[0:1,0:1])
     print('EOG: ', EOG[0:5])
     print('feedback: ', feedback[0:5])
     #print('Size of reshaped data_vector: ', np.shape(data_vector))
@@ -52,7 +52,7 @@ for files in list_of_train_files:
     X_new_file = []
     it = 1
     for feedback_event in events:
-        feature_vector = data[feedback_event : feedback_event+260, 39]  # channel CP2 is number 40, Cz is 30
+        feature_vector = data[feedback_event : feedback_event+260, 38]  # channel CP2 is number 39, Cz is 29
         np.transpose(feature_vector)
         if it==1:
             X_new_file = feature_vector
