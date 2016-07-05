@@ -16,35 +16,18 @@ import utils
 start_time = time.clock()
 
 ################ Reading ####################################
-# labels = np.loadtxt('TrainLabels.csv',delimiter=',',skiprows=1,usecols=[1])
-# y = labels
-# X_train = np.loadtxt('X_train.csv', delimiter=',')
-# X_test = np.loadtxt('X_test.csv',delimiter=',')
-
 X_train, y_train, X_test = utils.load_data("Data.mat")
 y_train = y_train + 1                     # Don't ask
 
 y_test = None
 
-# indices = []
-# indices.append(range(100,5440))
-# indices.append(range(0,100))
-
-# (train,valid,test) = utils.reformatInput(X_train,y_train,indices)
-
-# X_test = X_train[:99]
-# y_test = y_train[:99]
-# X_train = X_train[100:]
-# y_train = y_train[100:]
-
+# n_test = 1000
+# X_test = X_train[:n_test]
+# y_test = y_train[:n_test]
+# X_train = X_train[n_test:]
+# y_train = y_train[n_test:]
 
 ################################### Training
-# X_test = X_train[0:30, :]
-# y_test = y[0:30]
-
-# X_train = X_train[31:-1,:]
-# y = y[31:-1]
-
 # The main type of model is the Sequential model, a linear stack of layers
 # Generally, you need a network large enough to capture the structure of the problem if that helps at all
 # in this example we will use a fully-connected network structure with three layers.
@@ -71,24 +54,23 @@ model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accurac
 # Fit the model
 ## fixed number of iterations through the dataset called epochs
 ## set the number of instances that are evaluated before a weight update in the network is performed called the batch size
-model.fit(X_train, y_train, nb_epoch=4000, batch_size=100)
+model.fit(X_train, y_train, nb_epoch=3000, batch_size=100)
 
 
 
 if y_test != None:
      scores = model.evaluate(X_test, y_test)
-     print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
+     print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 else:
      pred = model.predict_classes(X_test)
      prob = model.predict_proba(X_test)
-     pred = pred[:,1]
      
      print(pred[0:100])
      print(prob[0:100])
      
      
      output = np.zeros(3401,dtype=object)
-     with open('SampleSubmission.csv', 'rb') as csvfile:
+     with open('../SampleSubmission.csv', 'rb') as csvfile:
           trial_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
           rownum = 0
           for row in trial_reader:
@@ -106,7 +88,7 @@ else:
           result_writer.writerow(['IdFeedBack','Prediction'])
           
           for i in range(1,3401):
-               result_writer.writerow([output[i],int(round(pred[i-1][0]))])
+               result_writer.writerow([output[i],prob[i-1][0]])
 
 end_time = time.clock()
 print'time elapse: ',(end_time-start_time)/60,' minutes'
