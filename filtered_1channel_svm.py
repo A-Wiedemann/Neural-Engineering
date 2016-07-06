@@ -25,18 +25,18 @@ X_test = np.loadtxt('X_test_filtered_channel.csv', delimiter=",")
 
 # print('X_train: ', X_train[0:1,0:1],np.shape(X_train))
 # print('X_test: ', X_test[0:1,0:1],np.shape(X_test))
-clf = svm.SVC(kernel="linear", C=5, gamma=1e-4, probability=True)
+clf = svm.SVC(kernel="linear", C=1, gamma=1e-4, probability=True)
 # clf = svm.SVC()
 # GRID SEARCH for finding the best parameters
 # param_grid = {'kernel': ('linear', 'rbf'), 'C': [0.01, 10], 'gamma': [0.00001, 0.01]}
 # svr = svm.SVC()
 # clf = grid_search.GridSearchCV(svr,param_grid)
-X_train = X_train[:, ::10]  # downsampling with a factor of 4
+X_train = X_train[:, ::3]  # downsampling with a factor of 4
 print('downsampled X_train: ', np.shape(X_train))
 #clf.fit(X_train, y)
-clf.fit(X_train[0:200, :], y[0:200])
+clf.fit(X_train[0:600, :], y[0:600])
 
-X_test = X_test[:, ::10]
+X_test = X_test[:, ::3]
 pred = clf.predict_proba(X_test)
 pred = pred[:, 1]
 
